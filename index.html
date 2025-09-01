@@ -46,6 +46,164 @@
             scroll-behavior: smooth;
         }
 
+        /* Futuristic header styles */
+        .futuristic-header {
+            position: relative;
+            text-align: center;
+            padding: 8rem 2rem 12rem;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 60%);
+        }
+
+        .futuristic-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, var(--primary), transparent);
+            animation: scanLine 3s ease-in-out infinite;
+        }
+
+        .futuristic-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: horizonLine 4s ease-in-out infinite;
+        }
+
+        @keyframes scanLine {
+            0%, 100% { opacity: 0; height: 0; }
+            50% { opacity: 1; height: 100px; }
+        }
+
+        @keyframes horizonLine {
+            0%, 100% { opacity: 0; width: 0; left: 50%; }
+            50% { opacity: 1; width: 100%; left: 0; }
+        }
+
+        .status-display {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary);
+            border-radius: 25px;
+            padding: 8px 20px;
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            animation: statusSweep 2s infinite;
+        }
+
+        @keyframes statusSweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .cyber-title {
+            font-size: clamp(3rem, 12vw, 6rem);
+            font-weight: 700;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ffffff, #00d4ff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleShimmer 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .cyber-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            color: rgba(0, 212, 255, 0.3);
+            z-index: -1;
+            animation: glitch 0.5s infinite;
+        }
+
+        @keyframes titleShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); opacity: 0.8; }
+            20% { transform: translate(-1px, 1px); opacity: 0.4; }
+            40% { transform: translate(1px, -1px); opacity: 0.6; }
+            60% { transform: translate(-1px, -1px); opacity: 0.4; }
+            80% { transform: translate(1px, 1px); opacity: 0.6; }
+        }
+
+        .cyber-subtitle {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .cyber-subtitle::before {
+            content: '[ ';
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .cyber-subtitle::after {
+            content: ' ]';
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .hologram-effect {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hologram-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 212, 255, 0.1) 40%,
+                rgba(0, 212, 255, 0.2) 50%,
+                rgba(0, 212, 255, 0.1) 60%,
+                transparent 70%
+            );
+            animation: hologramScan 4s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes hologramScan {
+            0% { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(200%) skewX(-15deg); }
+        }
+
         /* Modern glass morphism */
         .glass {
             background: var(--surface);
@@ -458,23 +616,25 @@
 
     <canvas id="background-canvas"></canvas>
 
-    <div class="content-wrapper p-6 md:p-12">
+    <div class="content-wrapper">
 
         <div id="main-page">
-            <header class="text-center mb-32 max-w-6xl mx-auto">
-                <div class="glass p-12 md:p-16 fade-in float">
-                    <div class="flex items-center justify-center mb-6">
-                        <div class="status-indicator"></div>
-                        <span class="text-sm mono text-gray-400">Available for opportunities</span>
-                    </div>
-                    <h1 class="gradient-text mb-6">Yasas Lokuge</h1>
-                    <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-                        From Aircraft Maintenance to Digital Innovation
-                    </p>
+            <header class="futuristic-header fade-in">
+                <div class="status-display">
+                    <div class="status-indicator"></div>
+                    <span class="text-gray-300">SYSTEM STATUS: AVAILABLE FOR OPPORTUNITIES</span>
                 </div>
+                
+                <div class="hologram-effect">
+                    <h1 class="cyber-title" data-text="YASAS LOKUGE">YASAS LOKUGE</h1>
+                </div>
+                
+                <p class="cyber-subtitle">
+                    From Aircraft Maintenance to Digital Innovation
+                </p>
             </header>
 
-            <div class="space-y-32 max-w-7xl mx-auto">
+            <div class="space-y-32 max-w-7xl mx-auto px-6 md:px-12">
 
                 <section id="maintenance-section" class="slide-up">
                     <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -613,7 +773,7 @@
                         
                         <div class="text-center mt-8">
                             <p class="text-gray-400 italic">
-                                "Education is the foundation that enables precision in aviation, innovation in digital spaces, and excellence in every endeavor."
+                                 "Education is the foundation that enables precision in aviation, innovation in digital spaces, and excellence in every endeavor."
                             </p>
                         </div>
                     </div>
@@ -664,6 +824,14 @@
                             <h4 class="text-xl font-semibold text-purple-300 mb-2">Figma</h4>
                             <p class="text-gray-400 text-sm">UI/UX Design</p>
                         </div>
+
+                        <div class="skill-card p-6 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
+                            <img src="figma.png" alt="Figma" class="w-16 h-16 mx-auto mb-4 rounded-lg" 
+                                 onerror="this.src='https://placehold.co/64x64/f24e1e/000000?text=Figma'">
+                            <h4 class="text-xl font-semibold text-purple-300 mb-2">Figma</h4>
+                            <p class="text-gray-400 text-sm">UI/UX Design</p>
+                        </div>
+
                     </div>
                 </div>
                 
@@ -794,7 +962,7 @@
                 </div>
 
                 <div class="project-card">
-                    <img src="4.jpg" alt="Engine inspection" class="w-full h-48 object-cover rounded-lg mb-4" 
+                    <img src="4.JPG" alt="Engine inspection" class="w-full h-48 object-cover rounded-lg mb-4" 
                          onerror="this.src='https://placehold.co/400x200/1a1a2e/9333ea?text=Engine+Inspection'">
                     <h4 class="text-lg font-bold mb-3 text-white">Engine Bay Inspection</h4>
                     <p class="text-gray-400 text-sm">
@@ -829,7 +997,7 @@
 
             <div class="project-grid">
                 <div class="project-card">
-                    <img src="6.jpg" alt="Client meeting" class="w-full h-48 object-cover rounded-lg mb-4" 
+                    <img src="6.JPG" alt="Client meeting" class="w-full h-48 object-cover rounded-lg mb-4" 
                          onerror="this.src='https://placehold.co/400x200/1a1a2e/64b5f6?text=Client+Meeting'">
                     <h4 class="text-lg font-bold mb-3 text-white">International Gaming Project</h4>
                     <p class="text-gray-400 text-sm">
@@ -1096,4 +1264,3 @@ END:VCARD`;
     </style>
 </body>
 </html>
-
